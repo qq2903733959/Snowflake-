@@ -2,7 +2,6 @@
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
-  text-align: center;
 }
 
 .logo {
@@ -42,8 +41,18 @@
 }
 
 canvas{
+  height: 500px;
+  width: 500px;
   border: 1px solid #eee;
+}
+.container{
+  position: relative;
+  display: flex;
 }
 .canvasDom2{
   position: absolute;
+  right: 0;
+  /* left: -50px;
+  top: -50px; */
+  /* background-color: rgba(0, 0, 0, 0.6); */
 }
