@@ -20,7 +20,7 @@ function App() {
   ])
   let ctx;
   let ctx2;
-  let ringWidth = 30;
+  let ringWidth = 20;
   let tic=10;
   let baseRadius  = tic*ringWidth;
   const sectorCount = data.length;
@@ -31,10 +31,12 @@ function App() {
     const dpr = window.devicePixelRatio || 1;
     ctx = canvasDom.current.getContext("2d")
     ctx2 = canvasDom2.current.getContext("2d")
-    canvasDom.current.width = dpr *500
-    canvasDom.current.height = dpr *500
-    canvasDom2.current.width = dpr *500
-    canvasDom2.current.height = dpr *500
+    // canvasDom.current.width = dpr *500
+    // canvasDom.current.height = dpr *500
+    // canvasDom2.current.width = dpr *500
+    // canvasDom2.current.height = dpr *500
+    // ringWidth = 20*dpr;
+    // baseRadius  = tic*ringWidth;
 
     ctx.save();
     ctx.translate(canvasDom.current.width/2,canvasDom.current.height/2)
@@ -159,18 +161,17 @@ function App() {
 
     const showTooltip = (i, dx, dy, x, y, rect) => {
       const sectorCenterAngle = i * sectorAngle - Math.PI / 2; // 与绘图逻辑一致
-      
       const tooltipRadius = baseRadius + 15; // 稍微外扩一点
     
-      const centerX = canvasDom.current.width / 2 / dpr; // 转为 CSS 像素
-      const centerY = canvasDom.current.height / 2 / dpr;
-
-      const tipX_css = (tooltipRadius * Math.cos(sectorCenterAngle)) / dpr;
-      const tipY_css = (tooltipRadius * Math.sin(sectorCenterAngle)) / dpr;
-
+      const tipX = tooltipRadius * Math.cos(sectorCenterAngle);
+      const tipY = tooltipRadius * Math.sin(sectorCenterAngle);
+    
+      const centerX = canvasDom.current.width / 2;
+      const centerY = canvasDom.current.height / 2;
+    
       setToolTipPos({
-        left: rect.left + centerX + tipX_css,
-        top:  rect.top  + centerY + tipY_css
+        left: rect.left + centerX + tipX,
+        top:  rect.top  + centerY + tipY
       });
     };
     
@@ -178,8 +179,8 @@ function App() {
      const handleMouseMove = (e) => {
       if(highlightRef.current>-1) return;
       const rect = canvasDom.current.getBoundingClientRect();
-      const x = (e.clientX - rect.left) * dpr;
-      const y = (e.clientY - rect.top) * dpr;
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
 
       const centerX = canvasDom.current.width / 2;
       const centerY = canvasDom.current.height / 2;
